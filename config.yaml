@@ -1,4 +1,4 @@
-baseURL: https://alpindev.netlify.app/
+baseURL: http://www.alpin.fun/
 languageCode: en-us
 title: My New Hugo Site
 theme: alpin # 主题设置
