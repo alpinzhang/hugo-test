@@ -1,0 +1,14 @@
+<footer>
+  公共底部
+  <hr>
+  {{- range site.Menus.footer }}
+  <a href="{{ .URL }}" style="margin: 0 10px">
+    {{ .Name }}
+    {{- with .Page }}
+      {{- with .Params.version -}}
+        ({{ . }})
+      {{- end }}
+    {{- end }}
+  </a>
+  {{- end }}
+</footer>

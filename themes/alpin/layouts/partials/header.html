@@ -1,0 +1,13 @@
+<nav>
+  导航：
+  {{- range site.Menus.main }}
+  <a href="{{ .URL }}" style="margin: 0 10px">
+    {{ .Name }}
+    {{- with .Page }}
+      {{- with .Params.version -}}
+        ({{ . }})
+      {{- end }}
+    {{- end }}
+  </a>
+  {{- end }}
+</nav>

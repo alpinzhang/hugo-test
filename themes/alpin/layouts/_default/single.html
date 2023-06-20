@@ -1,0 +1,34 @@
+{{ define "main"}}
+  <article>
+    <h1>{{ .Title }}</h1>
+    <p style="color: #999;font-size: 16px">kind: {{ .Kind }} section: {{ .Section }}</p>
+    <div>
+      {{ .Content }}
+    </div>
+  </article>
+  {{ $related := .Site.RegularPages.Related . | first 5 }}
+  {{ with $related }}
+  <h3>相关内容</h3>
+  <ul>
+    {{ range . }}
+    <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+    {{ end }}
+  </ul>
+  {{ else }}
+    没有相关内容
+  {{ end }}
+  <!-- 目录 -->
+  <aside>
+    <h3>页面目录</h3>
+    {{ .TableOfContents }}
+  </aside>
+  文章推荐
+  <ul>
+    <!-- where 条件筛选 -->
+    {{ range where site.Pages "Section" "blog" }}
+    <li>
+      <a href="{{.Permalink}}">{{ .Date.Format "2006-01-02"}} | {{ .Title }}</a>
+    </li>
+  {{ end }}
+  </ul>
+{{ end }}

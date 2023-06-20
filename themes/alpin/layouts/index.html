@@ -1,0 +1,17 @@
+{{ define "main"}}
+<h3>首页</h3>
+<ul>
+  {{ range .Site.RegularPages }}
+    <li>
+      <a href="{{.Permalink}}">{{ .Date.Format "2006-01-02"}} | {{ .Title }}</a>
+    </li>
+  {{ end }}
+</ul>
+<!-- 测试全局资源 -->
+<div id="test">
+  {{ $img := (resources.Get "img/dog.jpeg").Resize "x200" |  images.Filter (images.GaussianBlur 6) (images.Pixelate 8)}}
+  {{ with $img }}
+  <img src="{{ .RelPermalink }}">
+  {{ end }}
+</div>
+{{ end}}

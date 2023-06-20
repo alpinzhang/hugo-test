@@ -1,0 +1,71 @@
+baseURL: http://example.org/
+languageCode: en-us
+title: My New Hugo Site
+theme: alpin # 主题设置
+
+# 菜单设置
+# 1. 跟进section 自动生成菜单
+# sectionPagesMenu: main
+# 2. 全局配置
+menu:
+  main: 
+    - name: 首页
+      pageRef: /
+      weight: 10
+    - name: Blog
+      pageRef: /blog
+      weight: 20
+    - name: Note
+      pageRef: /note
+      weight: 20
+    - name: 兴趣
+      pageRef: /blog
+      weight: 10
+      parent: Blog
+    - name: 爱好
+      pageRef: /blog
+      weight: 20
+      parent: Blog
+    - name: Post
+      pageRef: /post
+      weight: 30
+    - name: Hugo Site
+      url: https://gohugo.io/
+  footer:
+    - name: Home
+      pageRef: /
+      weight: 10
+    - name: 站点地图
+      pageRef: /
+      weight: 20
+# url 文件扩展名开启
+uglyURLs: true
+# url 模式配置
+permalinks:
+  post: /post/:year-:month-:day-:slug/
+  # /: /:section/:year/:month/:slug/ 不生效
+
+# 相关文章
+related:
+  includeNewer: true # 是否包含新创建的文章
+  indices:
+  - name: keywords
+    weight: 100
+  - name: date
+    weight: 10
+  threshold: 80
+  toLower: true
+
+# markup 配置
+markup: 
+  highlight: # 代码高亮
+    # 好看的样式
+    # style: "doom-one"
+    style: monokai
+    lineNoStart: 1
+    lineNos: true
+    noClasses: true
+  tableOfContents: # toc 文章目录
+  endLevel: 3
+  ordered: false
+  startLevel: 2

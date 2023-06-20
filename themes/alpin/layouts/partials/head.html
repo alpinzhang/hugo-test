@@ -1,0 +1,27 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 当 config.yaml 中 markup.highlight.noClasses: false 时需要单独生成 语法样式  -->
+<!-- <link rel="stylesheet" href="/css/syntax.css"> -->
+<title>{{ .Title }}</title>
+<style>
+  /* 代码块的样式 */
+  /* .highlight pre{ 
+    padding: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    overflow-x: auto;
+  } */
+  .highlight {
+    margin: 1em 0;
+    line-height: 1.5em;
+    border-radius: 8px;
+    background-color: #272822;;
+    padding: 1em;
+  }
+
+  .highlight pre {
+    margin: 0;
+    overflow-y: auto ;
+  }
+</style>

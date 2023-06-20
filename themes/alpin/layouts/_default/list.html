@@ -1,0 +1,10 @@
+{{ define "main"}}
+<h3>列表-kind:{{ .Kind }}-section:{{ .Section }}</h3>
+<ul>
+  {{ range .Pages}}
+    <li>
+      <a href="{{.Permalink}}">{{ .Date.Format "2006-01-02"}} | {{ .Title }}</a>
+    </li>
+  {{ end }}
+</ul>
+{{ end}}
