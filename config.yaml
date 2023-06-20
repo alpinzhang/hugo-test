@@ -1,4 +1,4 @@
-baseURL: ./
+baseURL: https://main--sunny-elf-47cb11.netlify.app/
 languageCode: en-us
 title: My New Hugo Site
 theme: alpin # 主题设置
