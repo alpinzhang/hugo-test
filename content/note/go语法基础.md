@@ -5,54 +5,84 @@ date: 2023-05-23T15:52:20+08:00
 draft: false
 ---
 
-## 基本语法{#base-syntax}
-Go 模板是添加了 **变量** 和 **函数** 的 HTML 文件，变量和函数需要在 `{{...}}` 中使用
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131035923.webp)
 
-content 目录中存在的所有信息，都可以通过**模板变量**来获取，Hugo 提供了一些顶级变量：
-- `$` - 此变量表示模板的顶级上下文。 在页面模板的情况下，此变量表示当前页面。 像标题这样的页面级元数据以 `$.Title` 的形式提供，而描述以 `$.Description` 的形式提供。 页面级变量通过`Page` 属性链接到自身，因此我们可以将网站的标题写为 `$.Page.Title`。
+本文主要记录使用 PicGo + Github 搭建图床，并使用 jsDelivr CDN 加速；
 
-```go-html-template
-<!-- 获取文章 title 的几种取值方式 -->
-<h3>测试变量</h3>
-<p>title: {{.Title}}</p>
-<p>title: {{.Params.title}}</p>
-<p>title: {{$.Title}}</p>
-<p>title: {{$.Params.title}}</p>
-<p>title: {{$.Page.Title}}</p>
-<p>title: {{$.Page.Params.title}}</p>
-```
-以上几种方式都可以去到 `Front matter` 中 `title` 的值
-
-> 注意：
-- Front matter 中自定义的属性，只能通过 `.Params`、`$.Params` 和 `$.Page.Params`的属性来取值，后跟的属性，首字母大小和小写有效；并且 Params 不仅可以取**自定义属性**，同样也能取到**预设属性**
-- `$.Page` 后面的属性，首字母必须要大写，小写会报错；
-
-```bash
-echo 'export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles' >> ~/.zshrc
-source ~/.zshrc
-brew update
-```
-
-```mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-```
+## 下载安装PicGo
 
 ```
-git -C "$(brew --repo)" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.git
-
-git -C "$(brew --repo homebrew/core)" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.git
-
-git -C "$(brew --repo homebrew/cask)" remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.git
-//  更新
-brew update
+# 安装包下载地址
+https://github.com/Molunerfinn/PicGo/releases
+# 官方文档地址
+https://picgo.github.io/
 ```
+
+从 github 上选择稳定版本进行下载，我这里因为使用的是 M1芯片的Mac，故选择的是 `PicGo-2.3.1-arm64.dmg` 包，点击下载，正常安装即可；
+
+> **踩坑**：
+>
+> 我这里安装完后启动应用时，总是弹出“xxx 已损坏，无法打开。您应该将它移到废纸篓” 的报错，网上找了半天资料发现，在终端执行以下命令即可解决：
+>
+> ```sh
+> sudo xattr -r -d com.apple.quarantine '/Applications/PicGo.app'
+> ```
+
+## 创建仓库
+
+在 github 上新建一个仓库
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131051726.webp)
+
+把红框中的内容填好就可以创建仓库了，仓库名字，随便取；   
+
+然后，在 github 上点头像进入` settings` 选项，点击左侧最下面的菜单 `Developer settings` , 然后来到以下界面：
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131056281.webp)
+
+点击红框中的选项，来到 tokens 列表：
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131141141.webp)
+
+点击红框中按钮，进入 token 生成界面，这里会验证 github 登陆密码，输入密码后进入页面：
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131142088.webp)
+
+在第一个红框中，给这个 token 取个名字方便后面区分，第二个红框填写有效期，第三个红框，全部勾选即可把页面拉到最下面，点击生成 token，把生成好的 token，自己记录好，接下来，就是在 PicGo 客户端进行配置了
+
+## 配置仓库
+
+打开 PicGo 客户端，找到图床设置下的 github，点击进入配置页面：
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131142170.webp)
+
+- 设定仓库名 - 添写 github 的 `账户/仓库名`;
+- 设定分支名 - 填写使用的分支，默认是 master；
+- 设定 Token - 即将上面生成的 token 填写上；
+- 设定储存路径 - 仓库下的子目录，按自己规划填写；
+- 设定自定义域名 - 选填，这里我使用了 jsdelivr cdn 加速了一下，cdn 链接格式如下
+
+```
+https://cdn.jsdelivr.net/gh/账户名/仓库名
+```
+
+至此，仓库搭建完成，可以随便截个图，使用快捷键 `command/ctrl+shift+p`, 来直接将剪贴板中的图片上传；上传后，会自动复制链接到剪贴板中直接使用，并且可以在相册中可以查看预览；
+
+## 安装插件
+
+这里我分别安装了3个插件
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131124868.webp)
+
+- compression - 上传图片之前进行压缩，默认配置即可；
+- gitHub-plus - 在相册中删除图片可以同步到 github；
+- webp - 上传前将图片转化成 `.webp` 格式；
+
+安装插件碰到很多坑，安装很久安装不了，安装失败：
+
+- 确保本地 node 版本大于 16；
+- 配置 npm 安装镜像配置成淘宝的，如下图；
+
+![](https://cdn.jsdelivr.net/gh/alpinzhang/assets/blog/202312131130051.webp)
+
+如果还是装不了，就重新装其他的 PicGo 版本进行尝试；
